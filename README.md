@@ -7,16 +7,18 @@ The EFS CSI (Container Storage Interface) Driver enables Kubernetes to seamlessl
 This repository contains Terraform configurations to integrate the **AWS EFS CSI Driver** with an existing AWS EKS cluster. It includes the setup of necessary IAM roles, policies, and attachments, encryption for EFS volumes, and the association of the EKS cluster with the CSI Driver role. Additionally, a Helm chart is deployed to facilitate the dynamic management of EFS volumes within Kubernetes.
 
 ## Key Features:
-Seamless management of Amazon EFS volumes in Kubernetes using the EFS CSI Driver.
-Configuration of IAM roles and policies for secure operation.
-Support for encrypted EFS volumes.
-Deployment of the AWS EFS CSI Driver addon in the EKS cluster.
-Demonstrative deployment of Kubernetes StorageClass for EFS with the CSI driver.
+- Seamless management of Amazon EFS volumes in Kubernetes using the EFS CSI Driver.
+- OIDC token based identity verification of users and services within AWS.
+- Configuration of IAM roles and policies for secure operation.
+- Support for encrypted EFS volumes.
+- Deployment of the AWS EFS CSI Driver addon in the EKS cluster.
+- Demonstrative deployment of Kubernetes StorageClass for EFS with the CSI driver.
 
 ## Prerequisites:
 An existing EKS cluster.
 
 ## Resources Configured:
+- **aws_iam_openid_connect_provider "eks"** - Configures an OpenID Connect (OIDC) provider in AWS IAM for the AWS EKS cluster. It verifies the identity of users and services accessing resources within AWS based on the tokens issued by the OIDC provider.
 - **data "tls_certificate" "eks"** - Fetches the TLS certificate for the OIDC issuer URL of the AWS EKS cluster.
 - **resource "aws_iam_openid_connect_provider" "eks"** - Registers the OIDC provider for the AWS EKS cluster, validating clients with the specified TLS certificate fingerprint.
 - **resource "aws_efs_file_system" "eks"** - Defines an Amazon EFS file system with encryption enabled and general-purpose performance mode.
